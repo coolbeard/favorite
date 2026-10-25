@@ -1,21 +1,24 @@
 // 跨平台 KV 适配层
 // 支持 EdgeOne Pages (全局变量) / Cloudflare Workers (env 绑定)
+declare global {
+  const CLOUDNAV_KV: KVNamespace;
+}
 
 /**
  * 获取 KV 实例，自动检测运行平台
  * @param {object} env - 函数 context.env
  * @returns {object} KV 实例
  */
-export function getKV(env) {
-  // Cloudflare Workers: KV 在 env 上
-  if (env?.CLOUDNAV_KV && typeof env.CLOUDNAV_KV.get === 'function') {
-    return env.CLOUDNAV_KV;
-  }
-  // EdgeOne Pages: KV 作为全局变量注入
-  if (typeof CLOUDNAV_KV !== 'undefined' && typeof CLOUDNAV_KV.get === 'function') {
-    return CLOUDNAV_KV;
-  }
-  throw new Error('KV binding "CLOUDNAV_KV" not found. Please check your deployment configuration.');
+interface Env {
+  CLOUDNAV_KV?: KVNamespace;
+  PASSWORD?: string;
+  ALLOWED_ORIGIN?: string;
+}
+
+export function getKV(env: Env): KVNamespace {
+  if (env?.CLOUDNAV_KV) return env.CLOUDNAV_KV;
+  if (typeof CLOUDNAV_KV !== "undefined") return CLOUDNAV_KV;
+  throw new Error('KV binding "CLOUDNAV_KV" not found.');
 }
 
 /**
@@ -23,7 +26,7 @@ export function getKV(env) {
  * @param {object} env - 函数 context.env
  * @returns {object} CORS headers
  */
-export function getCorsHeaders(env) {
+export function getCorsHeaders(env: Env): Record<string, string> {
   const origin = env?.ALLOWED_ORIGIN || '*';
   return {
     'Access-Control-Allow-Origin': origin,
@@ -41,23 +44,21 @@ export function getCorsHeaders(env) {
  * @param {object} params.kv - KV 实例
  * @returns {Promise<boolean>}
  */
-export async function verifyAuth({ providedPassword, serverPassword, kv }) {
+export async function verifyAuth({
+  providedPassword,
+  serverPassword,
+  kv,
+}: {
+  providedPassword: string;
+  serverPassword?: string;
+  kv: KVNamespace;
+}): Promise<boolean> {
   if (!providedPassword) return false;
-
-  // 直接匹配密码
-  if (serverPassword && providedPassword === serverPassword) {
-    return true;
-  }
-
-  // 防御性校验：如果不是合法的 Token 格式 (32字节随机 hex 字符，长度为 64)，直接拦截
-  if (providedPassword.length !== 64 || !/^[0-9a-f]{64}$/i.test(providedPassword)) {
+  if (serverPassword && providedPassword === serverPassword) return true;
+  if (providedPassword.length !== 64 || !/^[0-9a-f]{64}$/i.test(providedPassword))
     return false;
-  }
-
-  // 查 KV 中的 Token
   try {
-    const tokenVal = await kv.get(`auth_token:${providedPassword}`);
-    return tokenVal === 'valid';
+    return (await kv.get(`auth_token:${providedPassword}`)) === "valid";
   } catch {
     return false;
   }
@@ -70,11 +71,15 @@ export async function verifyAuth({ providedPassword, serverPassword, kv }) {
  * @param {object} extraHeaders - 额外响应头
  * @returns {Response}
  */
-export function jsonResponse(data, status = 200, extraHeaders = {}) {
+export function jsonResponse(
+  data: unknown,
+  status = 200,
+  extraHeaders: Record<string, string> = {}
+): Response {
   return new Response(JSON.stringify(data), {
     status,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...extraHeaders,
     },
   });

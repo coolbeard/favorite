@@ -439,12 +439,14 @@ const LinkModal: React.FC<LinkModalProps> = ({ isOpen, onClose, onSave, onDelete
       switch (iconType) {
         case 'faviconextractor':
         case 'google':
-          iconUrl = `/api/favicon?domain=${domain}`;
+          iconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+          // iconUrl = `/api/favicon?domain=${domain}`;
           break;
         default:
           iconUrl = `/api/favicon?domain=${domain}`;
       }
 
+      // setIcon(iconUrl);
       setIcon(iconUrl);
     } catch (e) {
       console.error("Failed to fetch icon", e);

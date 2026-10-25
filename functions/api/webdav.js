@@ -1,7 +1,7 @@
 // WebDAV 代理接口
 // 支持 EdgeOne Pages / Cloudflare Workers
 
-import { getCorsHeaders, jsonResponse } from './_kvAdapter.js';
+import { getCorsHeaders, jsonResponse } from './_kvAdapter.ts';
 
 export async function onRequest(context) {
   const { request, env } = context;

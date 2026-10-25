@@ -53,7 +53,8 @@
     "node_modules",
     "dist",
     "build",
-    "vite.config.ts"
+    "vite.config.ts",
+    "functions/**/*"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -2,7 +2,7 @@
 // 支持将图标上传到 EdgeOne Pages Blob (腾讯云) 或 Cloudflare R2 (S3/Cloudflare)
 // 简洁注释以遵循用户全局规则
 
-import { getKV, getCorsHeaders, verifyAuth, jsonResponse } from './_kvAdapter.js';
+import { getKV, getCorsHeaders, verifyAuth, jsonResponse } from './_kvAdapter.ts';
 
 export async function onRequest(context) {
   const { request, env } = context;

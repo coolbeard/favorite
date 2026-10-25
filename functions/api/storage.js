@@ -2,7 +2,7 @@
 // 支持 EdgeOne Pages / Cloudflare Workers
 // 支持按分类拆分链接存储
 
-import { getKV, getCorsHeaders, verifyAuth, jsonResponse } from './_kvAdapter.js';
+import { getKV, getCorsHeaders, verifyAuth, jsonResponse } from './_kvAdapter.ts';
 
 const STORAGE_KEYS = {
   CONFIG_KEY: 'config',

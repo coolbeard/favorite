@@ -2,7 +2,7 @@
 // 支持在 EdgeOne Pages (Blob 存储) / Cloudflare Pages (R2 存储) 上使用二进制缓存
 // 简洁注释以遵循用户全局规则
 
-import { getCorsHeaders, jsonResponse, getKV } from './_kvAdapter.js';
+import { getCorsHeaders, jsonResponse, getKV } from './_kvAdapter';
 
 // 外部 Favicon 抓取源（Google API 设置为默认/最高优先级）
 const UPSTREAM_PROVIDERS = [

@@ -1,7 +1,7 @@
 // 调试接口（需要认证）
 // 支持 EdgeOne Pages / Cloudflare Workers
 
-import { getKV, getCorsHeaders, verifyAuth, jsonResponse } from './_kvAdapter.js';
+import { getKV, getCorsHeaders, verifyAuth, jsonResponse } from './_kvAdapter.ts';
 
 export async function onRequest(context) {
   const { request, env } = context;

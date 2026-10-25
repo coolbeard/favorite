@@ -1,4 +1,4 @@
-import { getKV, getCorsHeaders, verifyAuth, jsonResponse } from './_kvAdapter.js';
+import { getKV, getCorsHeaders, verifyAuth, jsonResponse } from './_kvAdapter.ts';
 
 const UPSTREAM_PROVIDERS = [
   (domain) => `https://www.google.com/s2/favicons?domain=${domain}&sz=64`,
