@@ -1,0 +1,13 @@
+{
+  "name": "favorite",
+  "compatibility_date": "2026-10-25",
+  "assets": {
+    "directory": "./dist"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "CLOUDNAV_KV",
+      "id": "本地调试可先留空，部署后再绑定真实 KV ID"
+    }
+  ]
+}

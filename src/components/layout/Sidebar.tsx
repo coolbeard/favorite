@@ -57,7 +57,7 @@ export function Sidebar({ isOpen, onClose, activeCategoryId, onOpenCatManager, o
           }`}>
             {isLocked ? <Lock size={16} className="text-amber-500" /> : <Icon name={cat.icon} size={16} />}
           </div>
-          <div className={`flex flex-1 items-center overflow-hidden transition-all ease-in-out ${isCollapsed ? 'max-w-0 opacity-0 ml-0 duration-150' : 'max-w-[200px] opacity-100 ml-3 duration-300 delay-150'}`}>
+          <div className={`flex flex-1 items-center overflow-hidden transition-all ease-in-out ${isCollapsed ? 'max-w-0 opacity-0 ml-0 duration-150' : 'max-w-50 opacity-100 ml-3 duration-300 delay-150'}`}>
             <span className="truncate flex-1 text-left">{cat.name}</span>
             {hasChildren && (
               <span className="text-slate-400 ml-2">
@@ -91,8 +91,8 @@ export function Sidebar({ isOpen, onClose, activeCategoryId, onOpenCatManager, o
         {/* Logo */}
         <div className="h-16 flex items-center justify-center relative border-b border-slate-100 dark:border-slate-700 shrink-0 transition-all duration-300">
           <span 
-            className={`text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent flex items-center h-full whitespace-nowrap overflow-hidden transition-all ease-in-out ${
-              isCollapsed ? 'max-w-0 opacity-0 duration-150' : 'max-w-[200px] opacity-100 duration-300 delay-150'
+            className={`text-xl font-bold bg-linear-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent flex items-center h-full whitespace-nowrap overflow-hidden transition-all ease-in-out ${
+              isCollapsed ? 'max-w-0 opacity-0 duration-150' : 'max-w-50 opacity-100 duration-300 delay-150'
             }`}
           >
             {ai?.sidebarNavigationName || ai?.navigationName || '蜗牛导航'}
@@ -129,7 +129,7 @@ export function Sidebar({ isOpen, onClose, activeCategoryId, onOpenCatManager, o
               title={isCollapsed ? '置顶网站' : undefined}
             >
               <div className="p-1 shrink-0"><Icon name="LayoutGrid" size={18} /></div>
-              <span className={`whitespace-nowrap overflow-hidden text-left transition-all ease-in-out ${isCollapsed ? 'max-w-0 opacity-0 ml-0 duration-150' : 'max-w-[200px] opacity-100 ml-3 duration-300 delay-150'}`}>置顶网站</span>
+              <span className={`whitespace-nowrap overflow-hidden text-left transition-all ease-in-out ${isCollapsed ? 'max-w-0 opacity-0 ml-0 duration-150' : 'max-w-50 opacity-100 ml-3 duration-300 delay-150'}`}>置顶网站</span>
             </button>
           )}
 
@@ -153,7 +153,7 @@ export function Sidebar({ isOpen, onClose, activeCategoryId, onOpenCatManager, o
         </div>
 
         {/* Footer - Spacer or simple copyright if needed */}
-        <div className="flex-shrink-0" />
+        <div className="shrink-0" />
       </aside>
     </>
   );

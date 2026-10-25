@@ -4,25 +4,15 @@
   "version": "2.0.1",
   "type": "module",
   "description": "A modern cloud-based navigation page supporting EdgeOne, Cloudflare, and Vercel",
-  "keywords": [
-    "navigation",
-    "bookmarks",
-    "edgeone",
-    "cloudflare",
-    "vercel",
-    "react",
-    "typescript",
-    "vite"
-  ],
   "author": "eallion",
   "license": "MIT",
-  "homepage": "https://github.com/eallion/favorite",
+  "homepage": "https://github.com/coolbeard/favorite",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eallion/favorite.git"
+    "url": "https://github.com/coolbeard/favorite.git"
   },
   "bugs": {
-    "url": "https://github.com/eallion/favorite/issues"
+    "url": "https://github.com/coolbeard/favorite/issues"
   },
   "engines": {
     "node": ">=18.0.0",
@@ -32,6 +22,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "d": "bunx wrangler pages dev ./dist --kv CLOUDNAV_KV",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext ts,tsx --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,md,json}\"",
@@ -54,6 +45,8 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^22.20.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "@typescript-eslint/eslint-plugin": "^8.70.0",
     "@typescript-eslint/parser": "^8.70.0",
     "@vitejs/plugin-react": "^5.2.0",

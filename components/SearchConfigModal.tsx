@@ -182,7 +182,7 @@ const SearchConfigModal: React.FC<SearchConfigModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+    <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden border border-slate-200 dark:border-slate-700 flex flex-col max-h-[90vh]">
         
         {/* Header */}
@@ -259,7 +259,7 @@ const SearchConfigModal: React.FC<SearchConfigModalProps> = ({
                           className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                         />
                         {index === 0 && source.enabled && (
-                          <Star size={16} className="text-yellow-500 fill-current" title="默认搜索引擎" />
+                          <Star size={16} className="text-yellow-500 fill-current" />
                         )}
                         <Globe size={16} className="text-slate-400" />
                       </div>

@@ -247,7 +247,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+    <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-200 dark:border-slate-700 flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="flex justify-between items-center p-4 border-b border-slate-200 dark:border-slate-700 shrink-0">
@@ -265,7 +265,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-6 overflow-y-auto min-h-[300px]">
+        <div className="p-6 space-y-6 overflow-y-auto min-h-75">
           {loading ? (
             <div className="flex items-center justify-center py-12">
               <Loader2 className="animate-spin w-8 h-8 text-blue-500" />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, X, Plus, Moon, Sun, Menu, Settings, Upload, CheckSquare, LogOut, Lock, GripVertical, Edit3, ChevronLeft, ChevronRight, Layers } from 'lucide-react';
+import { Search, X, Plus, Moon, Sun, Menu, Settings, Upload, CheckSquare, LogOut, Lock, GripVertical, Edit3, ChevronLeft, ChevronRight, Layers, SearchCode } from 'lucide-react';
 import { useConfigContext } from '../../contexts/ConfigContext';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useLinksContext } from '../../contexts/LinksContext';
@@ -37,6 +37,7 @@ interface HeaderProps {
   onSearch: (q: string) => void;
   onAddLink: () => void;
   onOpenSettings: () => void;
+  onOpenSearchSettings: () => void;
   onOpenCatManager: () => void;
   onOpenBackup: () => void;
   onOpenImport: () => void;
@@ -154,7 +155,7 @@ function RenderEngineLogo({
 }
 
 export function Header({
-  searchQuery, onSearchChange, isInternal, onInternalChange, onSearch, onAddLink, onOpenSettings,
+  searchQuery, onSearchChange, isInternal, onInternalChange, onSearch, onAddLink, onOpenSettings, onOpenSearchSettings,
   onOpenCatManager, onOpenBackup,
   onOpenImport, onOpenAuth, onToggleSidebar, isBatchEditMode, onToggleBatchEditMode,
   isMobileSearchOpen, onToggleMobileSearch,
@@ -194,7 +195,7 @@ export function Header({
           <button onClick={onToggleSidebar} className="lg:hidden p-2 -ml-2 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg cursor-pointer transition-colors">
             <Menu size={24} />
           </button>
-          <h1 className={`${isMobileSearchOpen ? 'hidden' : 'hidden sm:block'} text-lg font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent shrink-0`}>
+          <h1 className={`${isMobileSearchOpen ? 'hidden' : 'hidden sm:block'} text-lg font-bold bg-linear-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent shrink-0`}>
             {ai?.navigationName || '蜗牛个人导航'}
           </h1>
         </div>
@@ -237,7 +238,7 @@ export function Header({
                 onChange={(e) => onSearchChange(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && onSearch(searchQuery)}
                 placeholder={isInternal ? "搜索站内链接，点击图标（彩色时）搜索互联网" : "搜索互联网，点击图标（灰色时）站内搜索"}
-                className="w-full pl-9 pr-4 py-2 h-[36px] rounded-full bg-slate-200 dark:bg-slate-700 border-none text-xs focus:ring-2 focus:ring-blue-500 dark:text-white placeholder-slate-400 outline-none transition-all leading-none"
+                className="w-full pl-9 pr-4 py-2 h-9 rounded-full bg-slate-200 dark:bg-slate-700 border-none text-xs focus:ring-2 focus:ring-blue-500 dark:text-white placeholder-slate-400 outline-none transition-all leading-none"
                 style={{ fontSize: '16px' }}
                 inputMode="search"
                 enterKeyHint="search"
@@ -268,7 +269,7 @@ export function Header({
         {/* Right: Actions */}
         <div className="flex items-center gap-2">
           {/* Ticker & Search Shared Container */}
-          <div className="hidden md:flex items-center gap-2 w-[240px] lg:w-[360px] xl:w-[512px] shrink-0">
+          <div className="hidden md:flex items-center gap-2 w-60 lg:w-90 xl:w-lg shrink-0">
             {/* 1. Ticker (Now First) */}
             <div className={`transition-all duration-300 min-w-0 overflow-hidden ${isSearchExpanded ? 'w-9' : 'flex-1'}`}>
               <MastodonTicker config={ticker} isCollapsed={isSearchExpanded} />
@@ -306,12 +307,12 @@ export function Header({
 
           {/* View mode toggle */}
           <div 
-            className={`${isMobileSearchOpen ? 'hidden' : 'flex'} items-center bg-slate-200 dark:bg-slate-700 rounded-full h-[36px] shrink-0 border border-slate-300/50 p-0.5`}
+            className={`${isMobileSearchOpen ? 'hidden' : 'flex'} items-center bg-slate-200 dark:bg-slate-700 rounded-full h-9 shrink-0 border border-slate-300/50 p-0.5`}
             style={darkMode ? { border: 'none' } : {}}
           >
             <button
               onClick={() => setViewMode('compact')}
-              className={`px-3 py-2 text-xs font-medium rounded-full transition-all flex items-center justify-center h-full min-w-[40px] leading-none cursor-pointer ${
+              className={`px-3 py-2 text-xs font-medium rounded-full transition-all flex items-center justify-center h-full min-w-10 leading-none cursor-pointer ${
                 viewMode === 'compact'
                   ? 'bg-white dark:bg-slate-600 text-blue-600 dark:text-blue-400 shadow-sm border border-slate-200/50'
                   : 'text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-slate-100'
@@ -321,7 +322,7 @@ export function Header({
             >简约</button>
             <button
               onClick={() => setViewMode('detailed')}
-              className={`px-3 py-2 text-xs font-medium rounded-full transition-all flex items-center justify-center h-full min-w-[40px] leading-none cursor-pointer ${
+              className={`px-3 py-2 text-xs font-medium rounded-full transition-all flex items-center justify-center h-full min-w-10 leading-none cursor-pointer ${
                 viewMode === 'detailed'
                   ? 'bg-white dark:bg-slate-600 text-blue-600 dark:text-blue-400 shadow-sm border border-slate-200/50'
                   : 'text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-slate-100'
@@ -331,7 +332,7 @@ export function Header({
             >详情</button>
             <button
               onClick={() => setViewMode('app')}
-              className={`px-3 py-2 text-xs font-medium rounded-full transition-all flex items-center justify-center h-full min-w-[40px] leading-none cursor-pointer ${
+              className={`px-3 py-2 text-xs font-medium rounded-full transition-all flex items-center justify-center h-full min-w-10 leading-none cursor-pointer ${
                 viewMode === 'app'
                   ? 'bg-white dark:bg-slate-600 text-blue-600 dark:text-blue-400 shadow-sm border border-slate-200/50'
                   : 'text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-slate-100'
@@ -342,16 +343,16 @@ export function Header({
           </div>
 
           {/* Theme toggle */}
-          <button onClick={() => setDarkMode(!darkMode)} className={`${isMobileSearchOpen ? 'hidden' : 'flex'} items-center justify-center p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 h-[36px] min-w-[36px] cursor-pointer`}>
+          <button onClick={() => setDarkMode(!darkMode)} className={`${isMobileSearchOpen ? 'hidden' : 'flex'} items-center justify-center p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 h-9 min-w-9 cursor-pointer`}>
             {darkMode ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
           {/* GitHub link */}
           <a
-            href="https://github.com/eallion/favorite"
+            href="https://github.com/coolbeard/favorite"
             target="_blank"
             rel="noopener noreferrer"
-            className={`${isMobileSearchOpen ? 'hidden' : 'flex'} items-center justify-center p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 h-[36px] min-w-[36px] cursor-pointer transition-colors`}
+            className={`${isMobileSearchOpen ? 'hidden' : 'flex'} items-center justify-center p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 h-9 min-w-9 cursor-pointer transition-colors`}
             title="Favorite on GitHub"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12c0 5.303 3.438 9.8 8.205 11.385c.6.113.82-.258.82-.577c0-.285-.01-1.04-.015-2.04c-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729c1.205.084 1.838 1.236 1.838 1.236c1.07 1.835 2.809 1.305 3.495.998c.108-.776.417-1.305.76-1.605c-2.665-.3-5.466-1.332-5.466-5.93c0-1.31.465-2.38 1.235-3.22c-.135-.303-.54-1.523.105-3.176c0 0 1.005-.322 3.3 1.23c.96-.267 1.98-.399 3-.405c1.02.006 2.04.138 3 .405c2.28-1.552 3.285-1.23 3.285-1.23c.645 1.653.24 2.873.12 3.176c.765.84 1.23 1.91 1.23 3.22c0 4.61-2.805 5.625-5.475 5.92c.42.36.81 1.096.81 2.22c0 1.606-.015 2.896-.015 3.286c0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
@@ -362,23 +363,32 @@ export function Header({
           {authToken ? (
             <div className={`${isMobileSearchOpen ? 'hidden' : 'flex'} items-center gap-1`}>
               {/* Add link - Always visible as primary action */}
-              <button onClick={onAddLink} className="flex items-center justify-center p-2 rounded-full text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 h-[36px] min-w-[36px] cursor-pointer" title="添加链接">
+              <button onClick={onAddLink} className="flex items-center justify-center p-2 rounded-full text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 h-9 min-w-9 cursor-pointer" title="添加链接">
                 <Plus size={20} />
               </button>
 
-              <div className="h-4 w-[1px] bg-slate-300 dark:bg-slate-600 mx-1" />
+              <div className="h-4 w-px bg-slate-300 dark:bg-slate-600 mx-1" />
 
               {/* Collapsible Tools Area */}
               <div 
                 className={`flex items-center gap-1 transition-all duration-500 ease-in-out overflow-hidden ${
-                  isToolsExpanded ? 'max-w-[400px] opacity-100' : 'max-w-0 opacity-0'
+                  isToolsExpanded ? 'max-w-100 opacity-100' : 'max-w-0 opacity-0'
                 }`}
               >
                 <div className="flex items-center gap-1 pr-1">
+                  {/* SearchSettings */}
+                  <button
+                    onClick={onOpenSearchSettings}
+                    className="flex items-center justify-center p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 h-9 min-w-9 cursor-pointer"
+                    title="搜索设置"
+                  >
+                    <SearchCode size={18} />
+                  </button>
+
                   {/* Settings */}
                   <button
                     onClick={onOpenSettings}
-                    className="flex items-center justify-center p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 h-[36px] min-w-[36px] cursor-pointer"
+                    className="flex items-center justify-center p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 h-9 min-w-9 cursor-pointer"
                     title="系统设置"
                   >
                     <Settings size={18} />
@@ -387,7 +397,7 @@ export function Header({
                   {/* Manage Categories */}
                   <button
                     onClick={onOpenCatManager}
-                    className="flex items-center justify-center p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 h-[36px] min-w-[36px] cursor-pointer"
+                    className="flex items-center justify-center p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 h-9 min-w-9 cursor-pointer"
                     title="分类管理"
                   >
                     <Layers size={18} />
@@ -396,7 +406,7 @@ export function Header({
                   {/* Backup/Restore */}
                   <button
                     onClick={onOpenBackup}
-                    className="flex items-center justify-center p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 h-[36px] min-w-[36px] cursor-pointer"
+                    className="flex items-center justify-center p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 h-9 min-w-9 cursor-pointer"
                     title="备份恢复"
                   >
                     <Upload size={18} />
@@ -405,7 +415,7 @@ export function Header({
                   {/* Drag sort toggle */}
                   <button
                     onClick={onToggleDragSortMode}
-                    className={`flex items-center justify-center p-2 rounded-full h-[36px] min-w-[36px] cursor-pointer transition-colors ${
+                    className={`flex items-center justify-center p-2 rounded-full h-9 min-w-9 cursor-pointer transition-colors ${
                       isDragSortMode
                         ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400'
                         : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
@@ -418,7 +428,7 @@ export function Header({
                   {/* Edit mode toggle */}
                   <button
                     onClick={onToggleEditMode}
-                    className={`flex items-center justify-center p-2 rounded-full h-[36px] min-w-[36px] cursor-pointer transition-colors ${
+                    className={`flex items-center justify-center p-2 rounded-full h-9 min-w-9 cursor-pointer transition-colors ${
                       isEditMode
                         ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'
                         : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
@@ -429,12 +439,12 @@ export function Header({
                   </button>
 
                   {/* Batch edit */}
-                  <button onClick={onToggleBatchEditMode} className={`flex items-center justify-center p-2 rounded-full h-[36px] min-w-[36px] cursor-pointer ${isBatchEditMode ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'}`} title="批量编辑">
+                  <button onClick={onToggleBatchEditMode} className={`flex items-center justify-center p-2 rounded-full h-9 min-w-9 cursor-pointer ${isBatchEditMode ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'}`} title="批量编辑">
                     <CheckSquare size={18} />
                   </button>
 
                   {/* Logout */}
-                  <button onClick={logout} className="flex items-center justify-center p-2 rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 h-[36px] min-w-[36px] cursor-pointer" title="退出登录">
+                  <button onClick={logout} className="flex items-center justify-center p-2 rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 h-9 min-w-9 cursor-pointer" title="退出登录">
                     <LogOut size={18} />
                   </button>
                 </div>

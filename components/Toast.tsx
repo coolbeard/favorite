@@ -71,7 +71,7 @@ const Toast: React.FC<ToastProps> = ({ message, type = 'info', duration = 3000, 
         ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}
       `}
     >
-      <div className="flex-shrink-0">
+      <div className="shrink-0">
         {getIcon()}
       </div>
       <div className="flex-1 text-sm font-medium">
@@ -79,7 +79,7 @@ const Toast: React.FC<ToastProps> = ({ message, type = 'info', duration = 3000, 
       </div>
       <button
         onClick={handleClose}
-        className="flex-shrink-0 p-1 rounded hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+        className="shrink-0 p-1 rounded hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
       >
         <X size={14} className="opacity-60" />
       </button>
@@ -90,7 +90,7 @@ const Toast: React.FC<ToastProps> = ({ message, type = 'info', duration = 3000, 
 // Toast容器组件
 export const ToastContainer: React.FC<{ toasts: ToastItem[]; onRemove: (id: string) => void }> = ({ toasts, onRemove }) => {
   return (
-    <div className="fixed top-4 right-4 z-[9999] space-y-2 pointer-events-none">
+    <div className="fixed top-4 right-4 z-9999 space-y-2 pointer-events-none">
       <div className="space-y-2 pointer-events-auto">
         {toasts.map((toast) => (
           <Toast

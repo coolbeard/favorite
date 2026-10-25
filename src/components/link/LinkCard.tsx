@@ -154,9 +154,9 @@ export function LinkCard({
           : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'
       } ${isBatchEditMode ? 'cursor-pointer' : isDraggable ? 'cursor-grab active:cursor-grabbing' : 'cursor-pointer'} ${
         isDetailedView
-          ? 'flex flex-col rounded-2xl border shadow-sm p-4 min-h-[100px] items-start justify-start text-left w-full min-w-0'
+          ? 'flex flex-col rounded-2xl border shadow-sm p-4 min-h-25 items-start justify-start text-left w-full min-w-0'
           : isAppView
-          ? 'flex flex-col rounded-2xl border-0 border-transparent shadow-none p-2 items-center justify-center text-center w-full min-w-0 min-h-[96px] sm:min-h-[108px] hover:bg-slate-100/70 dark:hover:bg-slate-700/50'
+          ? 'flex flex-col rounded-2xl border-0 border-transparent shadow-none p-2 items-center justify-center text-center w-full min-w-0 min-h-24 sm:min-h-27 hover:bg-slate-100/70 dark:hover:bg-slate-700/50'
           : 'flex items-center justify-between rounded-xl border shadow-sm p-3'
       } ${isDragging ? 'shadow-2xl scale-105' : ''}`}
       onClick={handleClick}
@@ -231,7 +231,7 @@ export function LinkCard({
         {isDetailedView ? (
           <div className="flex flex-col md:flex-row md:items-start gap-3 w-full min-w-0">
             <div className="flex items-center gap-3 w-full md:hidden">
-              <div className="text-blue-600 dark:text-blue-400 flex items-center justify-center text-sm font-bold uppercase shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-700 dark:to-slate-800 border border-slate-200/80 dark:border-slate-700/60 shadow-sm">
+              <div className="text-blue-600 dark:text-blue-400 flex items-center justify-center text-sm font-bold uppercase shrink-0 w-10 h-10 rounded-xl bg-linear-to-br from-slate-50 to-slate-100 dark:from-slate-700 dark:to-slate-800 border border-slate-200/80 dark:border-slate-700/60 shadow-sm">
                 {iconSrc ? <img src={iconSrc} alt="" className="w-6 h-6 object-contain" loading="lazy" onError={() => setImgError(true)} /> : link.title.charAt(0).toUpperCase()}
               </div>
               <h3 className="flex-1 min-w-0 text-slate-800 dark:text-slate-200 text-base font-medium overflow-hidden text-ellipsis whitespace-nowrap group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" title={link.title}>
@@ -243,7 +243,7 @@ export function LinkCard({
                 {link.description}
               </p>
             )}
-            <div className="hidden md:flex text-blue-600 dark:text-blue-400 items-center justify-center text-sm font-bold uppercase shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-700 dark:to-slate-800 border border-slate-200/80 dark:border-slate-700/60 shadow-sm">
+            <div className="hidden md:flex text-blue-600 dark:text-blue-400 items-center justify-center text-sm font-bold uppercase shrink-0 w-14 h-14 rounded-2xl bg-linear-to-br from-slate-50 to-slate-100 dark:from-slate-700 dark:to-slate-800 border border-slate-200/80 dark:border-slate-700/60 shadow-sm">
               {iconSrc ? <img src={iconSrc} alt="" className="w-10 h-10 object-contain" loading="lazy" onError={() => setImgError(true)} /> : link.title.charAt(0).toUpperCase()}
             </div>
             <div className="hidden md:flex flex-1 min-w-0 flex-col justify-start w-full">
@@ -260,7 +260,7 @@ export function LinkCard({
         ) : isAppView ? (
           <>
             <div className="flex flex-col items-center justify-center w-full min-w-0">
-              <div className="text-blue-600 dark:text-blue-400 flex items-center justify-center text-base sm:text-lg font-bold uppercase shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-700 dark:to-slate-800 border border-slate-200/80 dark:border-slate-700/60 shadow-sm transition-all duration-200 group-hover:scale-110 group-hover:-translate-y-0.5 group-hover:shadow-md">
+              <div className="text-blue-600 dark:text-blue-400 flex items-center justify-center text-base sm:text-lg font-bold uppercase shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-linear-to-br from-slate-50 to-slate-100 dark:from-slate-700 dark:to-slate-800 border border-slate-200/80 dark:border-slate-700/60 shadow-sm transition-all duration-200 group-hover:scale-110 group-hover:-translate-y-0.5 group-hover:shadow-md">
                 {iconSrc ? (
                   <img src={iconSrc} alt="" className="w-8 h-8 sm:w-9 sm:h-9 object-contain" loading="lazy" onError={() => setImgError(true)} />
                 ) : (
@@ -272,7 +272,7 @@ export function LinkCard({
               </h3>
             </div>
             {link.description && (
-              <div className="tooltip-custom absolute left-1/2 -translate-x-1/2 -top-8 w-max max-w-[200px] bg-black text-white text-xs p-2 rounded opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all z-20 pointer-events-none truncate">
+              <div className="tooltip-custom absolute left-1/2 -translate-x-1/2 -top-8 w-max max-w-50 bg-black text-white text-xs p-2 rounded opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all z-20 pointer-events-none truncate">
                 {link.description}
               </div>
             )}
@@ -288,7 +288,7 @@ export function LinkCard({
               </h3>
             </div>
             {link.description && (
-              <div className="tooltip-custom absolute left-0 -top-8 w-max max-w-[200px] bg-black text-white text-xs p-2 rounded opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all z-20 pointer-events-none truncate">
+              <div className="tooltip-custom absolute left-0 -top-8 w-max max-w-50 bg-black text-white text-xs p-2 rounded opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all z-20 pointer-events-none truncate">
                 {link.description}
               </div>
             )}

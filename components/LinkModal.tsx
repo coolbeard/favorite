@@ -8,7 +8,7 @@ import { STORAGE_KEYS } from '../src/constants';
 interface LinkModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (link: Omit<LinkItem, 'id' | 'createdAt'>) => void;
+  onSave: (link: Omit<LinkItem,'createdAt'> & { id?: string }) => void;
   onDelete?: (id: string) => void;
   categories: Category[];
   initialData?: LinkItem;

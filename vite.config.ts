@@ -9,7 +9,15 @@ export default defineConfig(({ mode }) => {
       server: {
         port: 3000,
         host: '0.0.0.0',
-        open: true,
+        // open: true,
+        proxy: {
+          '/api': {
+            target: 'http://127.0.0.1:8788',
+            changeOrigin: true,
+            // 不要 rewrite！你的后端路由本身就是 /api/ 开头
+            // rewrite: (path) => path.replace(/^\/api/, '')
+          }
+        }
       },
       plugins: [
         react(),

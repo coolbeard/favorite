@@ -464,6 +464,7 @@ export function AppLayout() {
           onInternalChange={setIsInternal}
           onSearch={handleSearch}
           onAddLink={handleAddLink}
+          onOpenSearchSettings={()=>setIsSearchConfigModalOpen(true)}
           onOpenSettings={() => setIsSettingsModalOpen(true)}
           onOpenCatManager={() => setIsCatManagerOpen(true)}
           onOpenBackup={() => setIsBackupModalOpen(true)}
@@ -596,6 +597,8 @@ export function AppLayout() {
           <SearchConfigModal
             isOpen={isSearchConfigModalOpen}
             onClose={() => setIsSearchConfigModalOpen(false)}
+            sources={[]}
+            onSave={()=>{alert('暂未实现')}}
           />
         )}
 

@@ -26,7 +26,7 @@
     "noUncheckedIndexedAccess": false,
 
     /* Path mapping */
-    "baseUrl": ".",
+    // "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./components/*"],

@@ -212,7 +212,7 @@ export function ConfigProvider({ children }: { children: React.ReactNode }) {
       webdav: config.webdav || defaultWebDav,
       search: config.search || defaultSearch,
       icon: config.icon || DEFAULT_ICON_CONFIG,
-      ticker: config.ticker || config.mastodon || defaultTicker,
+      ticker: config.ticker || defaultTicker,
       weather: config.weather || defaultWeather,
     }});
   }, []);
