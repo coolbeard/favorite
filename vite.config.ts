@@ -2,32 +2,25 @@ import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 export default defineConfig(({ mode }) => {
-    // const env = loadEnv(mode, '.', '');
-
     return {
       server: {
         port: 3000,
         host: '0.0.0.0',
-        // open: true,
         proxy: {
           '/api': {
             target: 'http://127.0.0.1:8788',
             changeOrigin: true,
-            // 不要 rewrite！你的后端路由本身就是 /api/ 开头
-            // rewrite: (path) => path.replace(/^\/api/, '')
           }
         }
       },
       plugins: [
         react(),
         tailwindcss(),
+        visualizer()
       ],
-      // define: {
-      //   // 移除API密钥暴露到前端的配置
-      //   // API密钥应该只在后端使用
-      // },
       resolve: {
         alias: {
           '@': path.resolve(__dirname, './src'),
@@ -71,7 +64,7 @@ export default defineConfig(({ mode }) => {
         target: 'esnext',
       },
       optimizeDeps: {
-        include: ['react', 'react-dom', 'lucide-react'],
+        include: ['react', 'react-dom'],
       },
       css: {
         devSourcemap: true,

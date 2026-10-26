@@ -16,10 +16,10 @@
 - **前端可视化编辑**：右键菜单 / 拖拽排序 / 批量操作 / 分类管理
 - **访客模式**：普通用户可正常浏览，登录后获得管理权限
 - **KV 按分类存储**：链接按 `links:{category_id}` 拆分存储，读取时自动聚合
-- **多平台部署**：EdgeOne Pages / Cloudflare Pages / Vercel 一键部署
+- **多平台部署**：~~EdgeOne Pages /~~ Cloudflare Pages ~~/ Vercel 一键部署~~
 - **KV 云端存储**：数据持久化，localStorage 缓存 + KV 双向同步
-- **图标缓存**：可抓取网站图标并缓存到 EdgeOne Pages Blob / Cloudflare R2
-- **AI 辅助**：集成 Gemini / OpenAI 兼容 API，自动填充链接描述、智能分类建议
+- **图标缓存**：可抓取网站图标并缓存到cdn ~~EdgeOne Pages Blob / Cloudflare R2~~
+- ~~**AI 辅助**：集成 Gemini / OpenAI 兼容 API，自动填充链接描述、智能分类建议~~
 - **数据导入导出**：Chrome 书签 HTML / JSON 备份 / ~~WebDAV 云同步~~
 - **丰富小组件**：Mastodon / Memos 动态滚动条、实时天气（和风天气）
 - **个性化**：深色/浅色模式（自动检测系统偏好）、紧凑/详细视图、自定义图标
@@ -46,9 +46,9 @@
 
 #### Serverless / Storage
 
-- **EdgeOne Pages**: Edge Functions + EdgeOne KV
+- ~~**EdgeOne Pages**: Edge Functions + EdgeOne KV~~
 - **Cloudflare Pages**: Pages Functions + Cloudflare KV
-- **Vercel**: Vercel Functions + Vercel KV (Upstash Redis)
+- ~~**Vercel**: Vercel Functions + Vercel KV (Upstash Redis)~~
 
 ```
 ┌──────────────────────────────────────────────┐
@@ -73,23 +73,7 @@
 
 ## 🚀 部署指南
 
-### EdgeOne Pages (推荐)
-
-1. Fork 或克隆本仓库。
-2. 在 EdgeOne 控制台创建 Pages 项目。
-3. 构建设置：
-   - 框架预设：`Vite`
-   - 输出目录：`./dist`
-   - 安装命令：`pnpm install`
-   - 编译命令：`pnpm build`
-4. 绑定 KV：创建 KV 命名空间，变量名称设为 `CLOUDNAV_KV`。
-5. 环境变量：设置 `PASSWORD`（管理密码）。
-6. 自托管图标与缓存：
-   - 本项目支持使用 **EdgeOne Pages Blob 存储** 实现网站图标缓存及自定义上传。
-   - **无需手动配置/创建存储空间**，EdgeOne Pages Blob 由 SDK 首次调用时**自动创建**（命名空间归属于当前项目）。
-   - 支持在控制面板的“图标自托管与缓存”中开启/关闭自动抓取缓存（免费用户若担心存储空间超限可以关闭该选项，关闭后仅服务已上传的自定义图标与实时抓取而不写入缓存）。
-
-### Cloudflare Pages
+### Cloudflare Pages (推荐)
 
 1. 在 Cloudflare 控制台创建 Pages 项目，连接 GitHub 仓库。
 2. 构建设置：
@@ -111,17 +95,6 @@
    - 设置环境变量 `UPLOAD_PLATFORM` 值为 `cloudflare`。
    - 支持在控制面板的“图标自托管与缓存”中开启/关闭自动抓取缓存（免费用户若担心存储空间超限可以关闭该选项，关闭后仅服务已上传的自定义图标与实时抓取而不写入缓存）。
 6. 重新部署。
-
-### Vercel
-
-1. 在 Vercel 控制台导入 GitHub 仓库，框架预设选择 `Vite`。
-2. 创建并连接 KV：
-   - 在项目顶部菜单点击 **Storage** -> **Create Database** -> **Upstash for Redis**。
-   - 创建成功后，点击 **Connect** 按钮将其绑定 to 本项目。
-   - Vercel 会自动注入 `KV_URL` 等环境变量。
-3. 环境变量：
-   - 在项目 **Settings** -> **Environment Variables** 中手动添加 `PASSWORD`。
-4. 重新部署。
 
 ## ⚙️ 环境变量
 

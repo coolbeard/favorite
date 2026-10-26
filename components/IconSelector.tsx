@@ -1,38 +1,36 @@
 import React, { useState } from 'react';
-import * as LucideIcons from 'lucide-react';
-import { X, Search } from 'lucide-react';
-import Icon from './Icon';
+import { Search } from 'lucide-react';
+import Icon, { IconName } from './Icon';
 
 interface IconSelectorProps {
   onSelectIcon: (iconName: string) => void;
 }
 
 // 常用图标列表，可以根据需要扩展
-const commonIcons = [
-  'Star', 'Heart', 'Bookmark', 'Flag', 'Tag', 'Hash',
-  'Home', 'User', 'Users', 'Settings', 'Bell', 'Mail',
-  'Calendar', 'Clock', 'MapPin', 'Phone', 'Camera', 'Image',
-  'Folder', 'File', 'Archive', 'Trash2', 'Download', 'Upload',
-  'Search', 'Filter', 'Menu', 'MoreVertical', 'ChevronDown', 'ChevronUp',
-  'Plus', 'Minus', 'X', 'Check', 'AlertCircle', 'Info',
-  'Edit', 'Copy', 'Share', 'Link', 'ExternalLink', 'Lock',
-  'Code', 'Terminal', 'Database', 'Server', 'Cloud', 'Wifi',
-  'ShoppingCart', 'CreditCard', 'Package', 'Truck', 'Store', 'Tag',
-  'Music', 'Play', 'Pause', 'Volume2', 'Headphones', 'Mic',
-  'Book', 'BookOpen', 'FileText', 'PenTool', 'Highlighter', 'Type',
-  'Layout', 'Grid', 'List', 'Columns', 'Sidebar', 'Layers',
-  'Circle', 'Square', 'Triangle', 'Hexagon', 'Zap', 'Target',
-  'Rocket', 'Plane', 'Car', 'Bike', 'Ship', 'Train',
-  'Moon', 'Sun', 'CloudRain', 'CloudSnow', 'Wind', 'Thermometer',
-  'Github', 'Gitlab', 'Chrome', 'Firefox', 'Safari', 'Edge',
-  'MessageSquare', 'MessageCircle', 'Send', 'AtSign', 'Percent'
+const commonIcons: IconName[] = [
+  'star', 'heart', 'bookmark', 'flag', 'tag', 'hash',
+  'home', 'user', 'users', 'settings', 'bell', 'mail',
+  'calendar', 'clock', 'map-pin', 'phone', 'camera', 'image',
+  'folder', 'file', 'archive', 'trash-2', 'download', 'upload',
+  'search', 'filter', 'menu', 'more-vertical', 'chevron-down', 'chevron-up',
+  'plus', 'minus', 'x', 'check', 'alert-circle', 'info',
+  'edit', 'copy', 'share', 'link', 'external-link', 'lock',
+  'code', 'terminal', 'database', 'server', 'cloud', 'wifi',
+  'shopping-cart', 'credit-card', 'package', 'truck', 'store', 'tag',
+  'music', 'play', 'pause', 'volume-2', 'headphones', 'mic',
+  'book', 'book-open', 'file-text', 'pen-tool', 'highlighter', 'type',
+  'layout', 'grid', 'list', 'columns', 'sidebar', 'layers',
+  'circle', 'square', 'triangle', 'hexagon', 'zap', 'target',
+  'rocket', 'plane', 'car', 'bike', 'ship', 'train',
+  'moon', 'sun', 'cloud-rain', 'cloud-snow', 'wind', 'thermometer',
+  'message-square', 'message-circle', 'send', 'at-sign', 'percent'
 ];
 
 const IconSelector: React.FC<IconSelectorProps> = ({ 
   onSelectIcon
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedIcon, setSelectedIcon] = useState('Folder');
+  const [selectedIcon, setSelectedIcon] = useState<IconName>('folder');
 
   // 获取当前目标图标
   const getCurrentIcon = () => {
@@ -44,7 +42,7 @@ const IconSelector: React.FC<IconSelectorProps> = ({
     icon.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleSelect = (iconName: string) => {
+  const handleSelect = (iconName: IconName) => {
     setSelectedIcon(iconName);
   };
 

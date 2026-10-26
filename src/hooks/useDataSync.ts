@@ -25,7 +25,7 @@ export function useDataSync() {
 
         // 确保 common 分类存在且排第一
         if (cats.length > 0 && !cats.some(c => c.id === 'common')) {
-          cats = [{ id: 'common', name: '常用推荐', icon: 'Star' }, ...cats];
+          cats = [{ id: 'common', name: '常用推荐', icon: 'star' }, ...cats];
         }
 
         return { links: parsed.links || INITIAL_LINKS, categories: cats };
@@ -113,7 +113,7 @@ export function useDataSync() {
       // 云端有数据，用云端数据覆盖
       let cats = cloud.categories || [];
       if (cats.length > 0 && !cats.some((c: Category) => c.id === 'common')) {
-        cats = [{ id: 'common', name: '常用推荐', icon: 'Star' }, ...cats];
+        cats = [{ id: 'common', name: '常用推荐', icon: 'star' }, ...cats];
       }
       initLinks(cloud.links || []);
       initCategories(cats);

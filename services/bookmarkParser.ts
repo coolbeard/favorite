@@ -38,7 +38,7 @@ export const parseBookmarks = async (file: File): Promise<ImportResult> => {
     categories.push({
       id: newId,
       name: name,
-      icon: 'Folder', // Default icon for imported folders
+      icon: 'folder', // Default icon for imported folders
       parentId: parentId,
       isSubcategory: !!parentId
     });

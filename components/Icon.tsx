@@ -1,16 +1,18 @@
-import React from 'react';
-import * as LucideIcons from 'lucide-react';
+import { DynamicIcon } from 'lucide-react/dynamic';
+import { Suspense } from 'react';
+
+export type IconName = Parameters<typeof DynamicIcon>[0]['name'];
 
 interface IconProps {
-  name: string;
+  name: IconName;
   size?: number;
   className?: string;
 }
 
-const Icon: React.FC<IconProps> = ({ name, size = 20, className }) => {
-  // @ts-ignore - Dynamic access to Lucide icons
-  const IconComponent = LucideIcons[name] || LucideIcons.Link;
-  return <IconComponent size={size} className={className} />;
-};
+const Icon = ({ name, size = 18, className }: IconProps) => (
+  <Suspense fallback={<span style={{ width: size, height: size, display: 'inline-block' }} />}>
+    <DynamicIcon name={name} size={size} className={className} />
+  </Suspense>
+);
 
 export default Icon;

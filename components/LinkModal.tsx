@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { X, Sparkles, Loader2, Pin, Wand2, Trash2 } from 'lucide-react';
-import { LinkItem, Category, AIConfig, IconSourceType, IconConfig } from '../types';
-import { generateLinkDescription, suggestCategory } from '../services/geminiService';
-import { toast } from './Toast';
+import { X, Pin, Trash2 } from 'lucide-react';
+import { LinkItem, Category, AIConfig, IconConfig } from '../types';
 
 interface LinkModalProps {
   isOpen: boolean;
@@ -25,11 +23,6 @@ const LinkModal: React.FC<LinkModalProps> = ({ isOpen, onClose, onSave, onDelete
   const [pinned, setPinned] = useState(false);
   const [icon, setIcon] = useState('');
 
-  const [customIconUrl, setCustomIconUrl] = useState('');
-  const [edgeoneBlobUrl, setEdgeoneBlobUrl] = useState('');
-  const [cloudflareR2Url, setCloudflareR2Url] = useState('');
-
-  const [isGenerating, setIsGenerating] = useState(false);
   const [batchMode, setBatchMode] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [weight, setWeight] = useState(0);
@@ -106,9 +99,6 @@ const LinkModal: React.FC<LinkModalProps> = ({ isOpen, onClose, onSave, onDelete
         }
         setPinned(false);
         setIcon('');
-        setCustomIconUrl('');
-        setEdgeoneBlobUrl('');
-        setCloudflareR2Url('');
       }
     }
   }, [isOpen, initialData, categories, defaultCategoryId]);
@@ -172,14 +162,11 @@ const LinkModal: React.FC<LinkModalProps> = ({ isOpen, onClose, onSave, onDelete
       categoryId,
       pinned,
       weight,
-      pinnedOrder,
-      customIconUrl,
-      edgeoneBlobUrl,
-      cloudflareR2Url
+      pinnedOrder
     });
     
     // 如果有自定义图标URL，缓存到KV空间
-    if (icon && !icon.startsWith('/api/favicon') && !icon.includes('faviconextractor.com')) {
+    if (icon && !icon.startsWith('/api/icon') && !icon.includes('faviconextractor.com')) {
       cacheCustomIcon(finalUrl, icon);
     }
     
@@ -194,40 +181,6 @@ const LinkModal: React.FC<LinkModalProps> = ({ isOpen, onClose, onSave, onDelete
       setPinned(false);
     } else {
       onClose();
-    }
-  };
-
-  const handleAIAssist = async () => {
-    if (!url || !title) return;
-    if (!aiConfig.apiKey) {
-        toast.warning("请先点击侧边栏左下角设置图标配置 AI API Key");
-        return;
-    }
-
-    setIsGenerating(true);
-
-    // Parallel execution for speed
-    try {
-        const descPromise = generateLinkDescription(title, url, aiConfig);
-
-        // 只有在新建链接时才使用AI建议分类，编辑时保持原有分类
-        let catPromise = Promise.resolve(null);
-        if (!initialData) {
-            catPromise = suggestCategory(title, url, categories, aiConfig);
-        }
-
-        const [desc, cat] = await Promise.all([descPromise, catPromise]);
-
-        if (desc) setDescription(desc);
-        // 只有是新建链接且AI生成了分类建议时，才设置分类
-        if (cat && !initialData) {
-            setCategoryId(cat);
-        }
-
-    } catch (e) {
-        console.error("AI Assist failed", e);
-    } finally {
-        setIsGenerating(false);
     }
   };
 
@@ -315,6 +268,16 @@ const LinkModal: React.FC<LinkModalProps> = ({ isOpen, onClose, onSave, onDelete
           </div>
 
           <div>
+            <label className="block text-sm font-medium mb-1 dark:text-slate-300">描述 (选填)</label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all h-20 resize-none"
+              placeholder="简短描述..."
+            />
+          </div>
+
+          <div>
             <label className="block text-sm font-medium mb-1 dark:text-slate-300">图标</label>
             <div className="flex gap-2">
               <input
@@ -325,29 +288,6 @@ const LinkModal: React.FC<LinkModalProps> = ({ isOpen, onClose, onSave, onDelete
                     placeholder="留空自动获取图标"
                   />
             </div>
-          </div>
-
-          <div>
-            <div className="flex justify-between items-center mb-1">
-                <label className="block text-sm font-medium dark:text-slate-300">描述 (选填)</label>
-                {(title && url) && (
-                    <button
-                        type="button"
-                        onClick={handleAIAssist}
-                        disabled={isGenerating}
-                        className="text-xs flex items-center gap-1 text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 transition-colors"
-                    >
-                        {isGenerating ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
-                        AI 自动填写
-                    </button>
-                )}
-            </div>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all h-20 resize-none"
-              placeholder="简短描述..."
-            />
           </div>
 
           <div>

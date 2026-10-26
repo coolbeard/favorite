@@ -1,3 +1,5 @@
+import { IconName } from "@components/Icon";
+
 export interface LinkItem {
   id: string;
   title: string;
@@ -10,17 +12,12 @@ export interface LinkItem {
   pinnedOrder?: number;
   order?: number;
   weight?: number;
-  iconType?: string;
-  iconConfig?: Record<string, unknown>;
-  customIconUrl?: string;
-  edgeoneBlobUrl?: string;
-  cloudflareR2Url?: string;
 }
 
 export interface Category {
   id: string;
   name: string;
-  icon: string;
+  icon: IconName;
   password?: string;
   parentId?: string;
   isSubcategory?: boolean;
@@ -59,7 +56,7 @@ export type ViewMode = 'detailed' | 'app' | 'other';
 // export type ViewMode = 'detailed' | 'app';
 
 // 图标获取方式类型
-export type IconSourceType = 'faviconextractor' | 'google' | 'customapi' | 'customurl' | 'upload-edgeone' | 'upload-cloudflare';
+export type IconSourceType = 'customapi' | 'customurl';
 
 // 图标配置
 export interface IconConfig {
@@ -208,10 +205,10 @@ export interface AppConfig {
 }
 
 export const DEFAULT_CATEGORIES: Category[] = [
-  { id: "common", name: "常用推荐", icon: "Star" },
-  { id: "tools","name":"工具","icon":"Folder","isSubcategory":false},
-  { id: "life","name":"生活工具","icon":"Target","parentId":"tools","isSubcategory":true},
-  { id: "network","name":"网络工具","icon":"Wifi","parentId":"tools","isSubcategory":true},
+  { id: "common", name: "常用推荐", icon: "star" },
+  { id: "tools","name":"工具","icon":"folder","isSubcategory":false},
+  { id: "life","name":"生活工具","icon":"target","parentId":"tools","isSubcategory":true},
+  { id: "network","name":"网络工具","icon":"wifi","parentId":"tools","isSubcategory":true},
 ];
 
 export const INITIAL_LINKS: LinkItem[] = [

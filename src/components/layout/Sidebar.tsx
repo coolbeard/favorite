@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { LayoutGrid, Settings, Upload, X, Loader2, CheckCircle2, AlertCircle, Lock, ChevronDown, ChevronRight, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { useCallback, useState } from 'react';
+import { Settings, X, Lock, ChevronDown, ChevronRight, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { useCategoriesContext, CategoryWithChildren } from '../../contexts/CategoriesContext';
 import { useConfigContext } from '../../contexts/ConfigContext';
 import { useAuthContext } from '../../contexts/AuthContext';
@@ -128,7 +128,7 @@ export function Sidebar({ isOpen, onClose, activeCategoryId, onOpenCatManager, o
               } ${isCollapsed ? 'justify-center px-2' : 'px-4'}`}
               title={isCollapsed ? '置顶网站' : undefined}
             >
-              <div className="p-1 shrink-0"><Icon name="LayoutGrid" size={18} /></div>
+              <div className="p-1 shrink-0"><Icon name="layout-grid" size={18} /></div>
               <span className={`whitespace-nowrap overflow-hidden text-left transition-all ease-in-out ${isCollapsed ? 'max-w-0 opacity-0 ml-0 duration-150' : 'max-w-50 opacity-100 ml-3 duration-300 delay-150'}`}>置顶网站</span>
             </button>
           )}

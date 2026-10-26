@@ -48,7 +48,7 @@ export const UI_CONFIG = {
 } as const
 
 export const DEFAULT_ICON_CONFIG = {
-  source: 'google' as const,
+  source: 'customurl' as const,
   cacheEnabled: true,
   faviconextractor: {
     enabled: true,

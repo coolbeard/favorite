@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, ArrowUp, ArrowDown, Trash2, Edit2, Plus, Check, Lock, Unlock, Palette, Save } from 'lucide-react';
 import { Category } from '../types';
-import Icon from './Icon';
+import Icon, { type IconName } from './Icon';
 import IconSelector from './IconSelector';
 import CategoryActionAuthModal from './CategoryActionAuthModal';
 
@@ -30,13 +30,13 @@ const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
   const [editPassword, setEditPassword] = useState('');
-  const [editIcon, setEditIcon] = useState('');
+  const [editIcon, setEditIcon] = useState<IconName>('folder');
   const [editParentId, setEditParentId] = useState<string>('');
   const [editWeight, setEditWeight] = useState<number>(0);
 
   const [newCatName, setNewCatName] = useState('');
   const [newCatPassword, setNewCatPassword] = useState('');
-  const [newCatIcon, setNewCatIcon] = useState('Folder');
+  const [newCatIcon, setNewCatIcon] = useState<IconName>('folder');
   const [newCatParentId, setNewCatParentId] = useState<string>('');
 
   const [isIconSelectorOpen, setIsIconSelectorOpen] = useState(false);
@@ -246,7 +246,7 @@ const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
     markChanged([...localCategories, newCat]);
     setNewCatName('');
     setNewCatPassword('');
-    setNewCatIcon('Folder');
+    setNewCatIcon('folder');
     setNewCatParentId('');
   };
 
@@ -255,7 +255,7 @@ const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
     setIsIconSelectorOpen(true);
   };
 
-  const handleIconSelect = (iconName: string) => {
+  const handleIconSelect = (iconName: IconName) => {
     if (iconSelectorTarget === 'edit') setEditIcon(iconName);
     else if (iconSelectorTarget === 'new') setNewCatIcon(iconName);
   };
@@ -510,7 +510,7 @@ const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
                 </div>
                 <div className="flex-1 overflow-auto p-4">
                   <IconSelector
-                    onSelectIcon={(iconName) => {
+                    onSelectIcon={(iconName:IconName) => {
                       handleIconSelect(iconName);
                       setIsIconSelectorOpen(false);
                       setIconSelectorTarget(null);

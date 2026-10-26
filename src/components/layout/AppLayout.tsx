@@ -191,57 +191,6 @@ export function AppLayout() {
 
   const handleDeleteLink = useCallback((id: string) => {
     if (confirm('确定删除此链接吗？')) {
-      const linkToDelete = links.find(l => l.id === id);
-      if (linkToDelete) {
-        // 1. 清理 EdgeOne Blob 历史图标
-        if (linkToDelete.edgeoneBlobUrl && linkToDelete.edgeoneBlobUrl.startsWith('/api/favicon?key=')) {
-          try {
-            const url = new URL(linkToDelete.edgeoneBlobUrl, window.location.origin);
-            const key = url.searchParams.get('key');
-            if (key) {
-              fetch(`/api/upload?key=${encodeURIComponent(key)}&platform=edgeone`, {
-                method: 'DELETE',
-                headers: { 'x-auth-password': authToken || '' }
-              }).catch(err => console.error('Failed to delete edgeone historical icon:', err));
-            }
-          } catch (e) {
-            console.error(e);
-          }
-        }
-        // 2. 清理 Cloudflare R2 历史图标
-        if (linkToDelete.cloudflareR2Url && linkToDelete.cloudflareR2Url.startsWith('/api/favicon?key=')) {
-          try {
-            const url = new URL(linkToDelete.cloudflareR2Url, window.location.origin);
-            const key = url.searchParams.get('key');
-            if (key) {
-              fetch(`/api/upload?key=${encodeURIComponent(key)}&platform=cloudflare`, {
-                method: 'DELETE',
-                headers: { 'x-auth-password': authToken || '' }
-              }).catch(err => console.error('Failed to delete cloudflare historical icon:', err));
-            }
-          } catch (e) {
-            console.error(e);
-          }
-        }
-        // 3. 兼容旧版本数据或当前选中的图标（如果没有被前面的历史记录覆盖）
-        if (linkToDelete.icon && linkToDelete.icon.startsWith('/api/favicon?key=') &&
-            linkToDelete.icon !== linkToDelete.edgeoneBlobUrl &&
-            linkToDelete.icon !== linkToDelete.cloudflareR2Url) {
-          try {
-            const url = new URL(linkToDelete.icon, window.location.origin);
-            const key = url.searchParams.get('key');
-            if (key) {
-              const platform = linkToDelete.iconType === 'upload-cloudflare' ? 'cloudflare' : 'edgeone';
-              fetch(`/api/upload?key=${encodeURIComponent(key)}&platform=${platform}`, {
-                method: 'DELETE',
-                headers: { 'x-auth-password': authToken || '' }
-              }).catch(err => console.error('Failed to delete current icon:', err));
-            }
-          } catch (e) {
-            console.error(e);
-          }
-        }
-      }
       deleteLink(id);
       setLinksAndSync(links.filter(l => l.id !== id), categories);
     }
@@ -317,69 +266,6 @@ export function AppLayout() {
       return next;
     });
   }, []);
-
-  const handleBatchDelete = useCallback(() => {
-    if (selectedLinks.size === 0) return;
-    if (confirm(`确定要删除选中的 ${selectedLinks.size} 个链接吗？`)) {
-      // 批量删除关联的自定义及历史图标
-      links.forEach(l => {
-        if (selectedLinks.has(l.id)) {
-          // 1. 清理 EdgeOne Blob 历史图标
-          if (l.edgeoneBlobUrl && l.edgeoneBlobUrl.startsWith('/api/favicon?key=')) {
-            try {
-              const url = new URL(l.edgeoneBlobUrl, window.location.origin);
-              const key = url.searchParams.get('key');
-              if (key) {
-                fetch(`/api/upload?key=${encodeURIComponent(key)}&platform=edgeone`, {
-                  method: 'DELETE',
-                  headers: { 'x-auth-password': authToken || '' }
-                }).catch(err => console.error('Failed to delete edgeone historical icon during batch delete:', err));
-              }
-            } catch (e) {
-              console.error(e);
-            }
-          }
-          // 2. 清理 Cloudflare R2 历史图标
-          if (l.cloudflareR2Url && l.cloudflareR2Url.startsWith('/api/favicon?key=')) {
-            try {
-              const url = new URL(l.cloudflareR2Url, window.location.origin);
-              const key = url.searchParams.get('key');
-              if (key) {
-                fetch(`/api/upload?key=${encodeURIComponent(key)}&platform=cloudflare`, {
-                  method: 'DELETE',
-                  headers: { 'x-auth-password': authToken || '' }
-                }).catch(err => console.error('Failed to delete cloudflare historical icon during batch delete:', err));
-              }
-            } catch (e) {
-              console.error(e);
-            }
-          }
-          // 3. 兼容旧版本数据或当前图标
-          if (l.icon && l.icon.startsWith('/api/favicon?key=') &&
-              l.icon !== l.edgeoneBlobUrl &&
-              l.icon !== l.cloudflareR2Url) {
-            try {
-              const url = new URL(l.icon, window.location.origin);
-              const key = url.searchParams.get('key');
-              if (key) {
-                const platform = l.iconType === 'upload-cloudflare' ? 'cloudflare' : 'edgeone';
-                fetch(`/api/upload?key=${encodeURIComponent(key)}&platform=${platform}`, {
-                  method: 'DELETE',
-                  headers: { 'x-auth-password': authToken || '' }
-                }).catch(err => console.error('Failed to delete current icon during batch delete:', err));
-              }
-            } catch (e) {
-              console.error(e);
-            }
-          }
-        }
-      });
-      const newLinks = links.filter(l => !selectedLinks.has(l.id));
-      setLinksAndSync(newLinks, categories);
-      setSelectedLinks(new Set());
-      setIsBatchEditMode(false);
-    }
-  }, [selectedLinks, links, categories, setLinksAndSync, authToken]);
 
   // Weight change handler
   const handleWeightChange = useCallback((linkId: string, weight: number) => {
