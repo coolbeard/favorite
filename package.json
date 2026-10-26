@@ -3,8 +3,8 @@
   "private": true,
   "version": "2.0.1",
   "type": "module",
-  "description": "A modern cloud-based navigation page supporting EdgeOne, Cloudflare, and Vercel",
-  "author": "eallion",
+  "description": "基于 Cloudflare 生态的现代化导航",
+  "author": "coolbeard",
   "license": "MIT",
   "homepage": "https://github.com/coolbeard/favorite",
   "repository": {
@@ -15,8 +15,7 @@
     "url": "https://github.com/coolbeard/favorite/issues"
   },
   "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=8.0.0"
+    "bun": ">=1.4.2"
   },
   "scripts": {
     "dev": "vite",
@@ -37,30 +36,25 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@edgeone/pages-blob": "^0.0.8",
     "@google/genai": "^1.52.0",
-    "@vercel/kv": "^3.0.0",
     "buffer": "^6.0.3",
     "lucide-react": "^0.554.0",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0",
-    "uuid": "^13.0.2"
+    "react-dom": "^19.3.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20261025.1",
-    "@tailwindcss/postcss": "^4.3.3",
-    "@types/node": "^22.20.4",
+    "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@typescript-eslint/eslint-plugin": "^8.70.0",
     "@typescript-eslint/parser": "^8.70.0",
     "@vitejs/plugin-react": "^5.2.0",
-    "autoprefixer": "^10.6.1",
     "eslint": "^9.39.5",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "prettier": "^3.9.8",
     "tailwindcss": "^4.3.3",
-    "terser": "^5.51.2",
     "typescript": "~5.8.3",
     "vite": "^6.4.3"
   }

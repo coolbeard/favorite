@@ -1,4 +1,4 @@
-import { AppConfig, WebDavConfig, SearchConfig, IconConfig, AIConfig, WebsiteConfig, TickerConfig, WeatherConfig, ViewMode } from '../../types';
+import { AppConfig, SearchConfig, IconConfig, AIConfig, WebsiteConfig, TickerConfig, WeatherConfig, ViewMode } from '../../types';
 import { STORAGE_KEYS } from '../constants';
 
 // 默认配置
@@ -89,21 +89,6 @@ class ConfigManager {
    */
   getWebsiteConfig(): WebsiteConfig | undefined {
     return this.config.website;
-  }
-
-  /**
-   * 更新 WebDAV 配置
-   */
-  updateWebDavConfig(webdavConfig: WebDavConfig): void {
-    this.config.webdav = webdavConfig;
-    this.saveToLocalStorage();
-  }
-
-  /**
-   * 获取 WebDAV 配置
-   */
-  getWebDavConfig(): WebDavConfig | undefined {
-    return this.config.webdav;
   }
 
   /**
@@ -301,8 +286,6 @@ export const updateAIConfig = (config: AIConfig) => configManager.updateAIConfig
 export const getAIConfig = () => configManager.getAIConfig();
 export const updateWebsiteConfig = (config: WebsiteConfig) => configManager.updateWebsiteConfig(config);
 export const getWebsiteConfig = () => configManager.getWebsiteConfig();
-export const updateWebDavConfig = (config: WebDavConfig) => configManager.updateWebDavConfig(config);
-export const getWebDavConfig = () => configManager.getWebDavConfig();
 export const updateSearchConfig = (config: SearchConfig) => configManager.updateSearchConfig(config);
 export const getSearchConfig = () => configManager.getSearchConfig();
 export const updateIconConfig = (config: IconConfig) => configManager.updateIconConfig(config);

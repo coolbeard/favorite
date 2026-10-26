@@ -54,13 +54,12 @@ interface SettingsModalProps {
   onClose: () => void;
   authToken: string | null;
   onSettingsLoaded: (settings: SettingsData) => void;
-  onImportClick: () => void;
   onBackupClick: () => void;
   supportsUpload?: boolean;
 }
 
 const SettingsModal: React.FC<SettingsModalProps> = ({
-  isOpen, onClose, authToken, onSettingsLoaded, onImportClick, onBackupClick, supportsUpload = true
+  isOpen, onClose, authToken, onSettingsLoaded, onBackupClick, supportsUpload = true
 }) => {
   const [settings, setSettings] = useState<SettingsData>(DEFAULT_SETTINGS);
   const [loading, setLoading] = useState(false);
@@ -399,7 +398,6 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                   <LayoutGrid size={16} /> 默认视图模式
                 </h4>
                 <div className="flex gap-3">
-                  <button onClick={() => update('defaultViewMode', 'compact')} className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all ${settings.defaultViewMode === 'compact' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border-2 border-blue-500' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 border-2 border-transparent'}`}>简约</button>
                   <button onClick={() => update('defaultViewMode', 'detailed')} className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all ${settings.defaultViewMode === 'detailed' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border-2 border-blue-500' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 border-2 border-transparent'}`}>详细</button>
                   <button onClick={() => update('defaultViewMode', 'app')} className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all ${settings.defaultViewMode === 'app' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border-2 border-blue-500' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 border-2 border-transparent'}`}>应用</button>
                 </div>
@@ -697,11 +695,8 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                   <h4 className="font-bold dark:text-white mb-3 text-sm flex items-center gap-2">
                     <CloudCog size={16} /> 网站内容管理
                   </h4>
-                  <div className="grid grid-cols-2 gap-3">
-                    <button onClick={onImportClick} className="flex flex-col items-center justify-center gap-2 p-3 text-sm text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 rounded-lg border border-slate-200 dark:border-slate-600 transition-all">
-                      <Upload size={18} /><span>导入书签</span>
-                    </button>
-                    <button onClick={onBackupClick} className="flex flex-col items-center justify-center gap-2 p-3 text-sm text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 rounded-lg border border-slate-200 dark:border-slate-600 transition-all">
+                  <div>
+                    <button onClick={onBackupClick} className="w-full flex flex-col items-center justify-center gap-2 p-3 text-sm text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 rounded-lg border border-slate-200 dark:border-slate-600 transition-all">
                       <CloudCog size={18} /><span>备份恢复</span>
                     </button>
                   </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, X, Plus, Moon, Sun, Menu, Settings, Upload, CheckSquare, LogOut, Lock, GripVertical, Edit3, ChevronLeft, ChevronRight, Layers, SearchCode } from 'lucide-react';
+import { Search, X, Plus, Moon, Sun, Menu, Settings, Upload, CheckSquare, LogOut, Lock, GripVertical, Edit3, ChevronLeft, ChevronRight, Layers, SearchCode, DatabaseBackup } from 'lucide-react';
 import { useConfigContext } from '../../contexts/ConfigContext';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useLinksContext } from '../../contexts/LinksContext';
@@ -40,7 +40,6 @@ interface HeaderProps {
   onOpenSearchSettings: () => void;
   onOpenCatManager: () => void;
   onOpenBackup: () => void;
-  onOpenImport: () => void;
   onOpenAuth: () => void;
   onToggleSidebar: () => void;
   isBatchEditMode: boolean;
@@ -157,7 +156,7 @@ function RenderEngineLogo({
 export function Header({
   searchQuery, onSearchChange, isInternal, onInternalChange, onSearch, onAddLink, onOpenSettings, onOpenSearchSettings,
   onOpenCatManager, onOpenBackup,
-  onOpenImport, onOpenAuth, onToggleSidebar, isBatchEditMode, onToggleBatchEditMode,
+  onOpenAuth, onToggleSidebar, isBatchEditMode, onToggleBatchEditMode,
   isMobileSearchOpen, onToggleMobileSearch,
   isSearchExpanded, setIsSearchExpanded,
   isDragSortMode, onToggleDragSortMode,
@@ -196,7 +195,7 @@ export function Header({
             <Menu size={24} />
           </button>
           <h1 className={`${isMobileSearchOpen ? 'hidden' : 'hidden sm:block'} text-lg font-bold bg-linear-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent shrink-0`}>
-            {ai?.navigationName || '蜗牛个人导航'}
+            {ai?.navigationName || 'loading'}
           </h1>
         </div>
 
@@ -311,16 +310,6 @@ export function Header({
             style={darkMode ? { border: 'none' } : {}}
           >
             <button
-              onClick={() => setViewMode('compact')}
-              className={`px-3 py-2 text-xs font-medium rounded-full transition-all flex items-center justify-center h-full min-w-10 leading-none cursor-pointer ${
-                viewMode === 'compact'
-                  ? 'bg-white dark:bg-slate-600 text-blue-600 dark:text-blue-400 shadow-sm border border-slate-200/50'
-                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-slate-100'
-              }`}
-              style={darkMode && viewMode === 'compact' ? { border: 'none' } : {}}
-              title="简约版视图"
-            >简约</button>
-            <button
               onClick={() => setViewMode('detailed')}
               className={`px-3 py-2 text-xs font-medium rounded-full transition-all flex items-center justify-center h-full min-w-10 leading-none cursor-pointer ${
                 viewMode === 'detailed'
@@ -409,7 +398,7 @@ export function Header({
                     className="flex items-center justify-center p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 h-9 min-w-9 cursor-pointer"
                     title="备份恢复"
                   >
-                    <Upload size={18} />
+                    <DatabaseBackup size={18} />
                   </button>
 
                   {/* Drag sort toggle */}

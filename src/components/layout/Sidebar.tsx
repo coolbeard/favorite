@@ -95,7 +95,7 @@ export function Sidebar({ isOpen, onClose, activeCategoryId, onOpenCatManager, o
               isCollapsed ? 'max-w-0 opacity-0 duration-150' : 'max-w-50 opacity-100 duration-300 delay-150'
             }`}
           >
-            {ai?.sidebarNavigationName || ai?.navigationName || '蜗牛导航'}
+            {ai?.sidebarNavigationName || ai?.navigationName || 'loading'}
           </span>
           {isCollapsed && (
             <button onClick={() => setIsCollapsed(false)} className="hidden lg:flex absolute p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors cursor-pointer" title="展开侧边栏">

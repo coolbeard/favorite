@@ -1,16 +1,15 @@
 import React, { createContext, useContext, useReducer, useCallback, useEffect } from 'react';
 import {
-  AppConfig, AIConfig, WebsiteConfig, WebDavConfig,
+  AIConfig, WebsiteConfig,
   SearchConfig, IconConfig, TickerConfig, WeatherConfig, ViewMode,
 } from '../../types';
-import { STORAGE_KEYS, DEFAULT_ICON_CONFIG } from '../constants';
+import { DEFAULT_ICON_CONFIG } from '../constants';
 import { configManager } from '../utils/configManager';
 
 // --- Types ---
 interface ConfigState {
   ai: AIConfig;
   website: WebsiteConfig;
-  webdav: WebDavConfig;
   search: SearchConfig;
   icon: IconConfig;
   ticker: TickerConfig;
@@ -23,7 +22,6 @@ interface ConfigState {
 type ConfigAction =
   | { type: 'SET_AI'; payload: AIConfig }
   | { type: 'SET_WEBSITE'; payload: WebsiteConfig }
-  | { type: 'SET_WEBDAV'; payload: WebDavConfig }
   | { type: 'SET_SEARCH'; payload: SearchConfig }
   | { type: 'SET_ICON'; payload: IconConfig }
   | { type: 'SET_TICKER'; payload: TickerConfig }
@@ -37,7 +35,6 @@ interface ConfigContextValue extends ConfigState {
   initConfig: (config: Partial<ConfigState>) => void;
   setAI: (config: AIConfig) => void;
   setWebsite: (config: WebsiteConfig) => void;
-  setWebDav: (config: WebDavConfig) => void;
   setSearch: (config: SearchConfig) => void;
   setIcon: (config: IconConfig) => void;
   setMastodon: (config: TickerConfig) => void;
@@ -61,10 +58,6 @@ const defaultWebsite: WebsiteConfig = {
   passwordExpiry: { value: 1, unit: 'week' },
   icp: '',
   mps: '',
-};
-
-const defaultWebDav: WebDavConfig = {
-  url: '', username: '', password: '', enabled: false,
 };
 
 const defaultSearch: SearchConfig = {
@@ -91,7 +84,6 @@ function configReducer(state: ConfigState, action: ConfigAction): ConfigState {
   switch (action.type) {
     case 'SET_AI': return { ...state, ai: action.payload };
     case 'SET_WEBSITE': return { ...state, website: action.payload };
-    case 'SET_WEBDAV': return { ...state, webdav: action.payload };
     case 'SET_SEARCH': return { ...state, search: action.payload };
     case 'SET_ICON': return { ...state, icon: action.payload };
     case 'SET_TICKER': return { ...state, ticker: action.payload };
@@ -117,12 +109,11 @@ export function ConfigProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(configReducer, {
     ai: configManager.getAIConfig() || defaultAI,
     website: configManager.getWebsiteConfig() || defaultWebsite,
-    webdav: configManager.getWebDavConfig() || defaultWebDav,
     search: configManager.getSearchConfig() || defaultSearch,
     icon: configManager.getIconConfig() || DEFAULT_ICON_CONFIG,
     ticker: configManager.getMastodonConfig() || defaultTicker,
     weather: configManager.getWeatherConfig() || defaultWeather,
-    viewMode: (savedViewMode === 'detailed' || savedViewMode === 'compact' || savedViewMode === 'app')
+    viewMode: (savedViewMode === 'detailed' || savedViewMode === 'app')
       ? savedViewMode
       : (configManager.getViewMode()?.defaultMode || 'detailed'),
     showPinnedWebsites: configManager.getUIConfig()?.showPinnedWebsites ?? true,
@@ -149,11 +140,6 @@ export function ConfigProvider({ children }: { children: React.ReactNode }) {
   const setWebsite = useCallback((config: WebsiteConfig) => {
     dispatch({ type: 'SET_WEBSITE', payload: config });
     configManager.updateWebsiteConfig(config);
-  }, []);
-
-  const setWebDav = useCallback((config: WebDavConfig) => {
-    dispatch({ type: 'SET_WEBDAV', payload: config });
-    configManager.updateWebDavConfig(config);
   }, []);
 
   const setSearch = useCallback((config: SearchConfig) => {
@@ -209,7 +195,6 @@ export function ConfigProvider({ children }: { children: React.ReactNode }) {
     dispatch({ type: 'LOAD_CONFIG', payload: {
       ai: config.ai || defaultAI,
       website: config.website || defaultWebsite,
-      webdav: config.webdav || defaultWebDav,
       search: config.search || defaultSearch,
       icon: config.icon || DEFAULT_ICON_CONFIG,
       ticker: config.ticker || defaultTicker,
@@ -235,7 +220,7 @@ export function ConfigProvider({ children }: { children: React.ReactNode }) {
     <ConfigContext.Provider value={{
       ...state,
       initConfig,
-      setAI, setWebsite, setWebDav, setSearch, setIcon,
+      setAI, setWebsite, setSearch, setIcon,
       setMastodon, setWeather, setViewMode, setShowPinned, setDarkMode,
       syncConfigToKV, loadConfigFromKV,
     }}>

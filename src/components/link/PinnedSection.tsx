@@ -23,7 +23,7 @@ interface PinnedSectionProps {
 }
 
 export function PinnedSection({
-  links, viewMode = 'compact', isBatchEditMode, selectedLinks, onToggleSelection,
+  links, viewMode = 'detailed', isBatchEditMode, selectedLinks, onToggleSelection,
   onEditLink, onDeleteLink, onContextMenu, onDragEnd, sensors, authToken,
   isDraggable = false, isEditMode = false, onWeightChange,
 }: PinnedSectionProps) {

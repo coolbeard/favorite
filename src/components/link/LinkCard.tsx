@@ -257,6 +257,7 @@ export function LinkCard({
               )}
             </div>
           </div>
+          
         ) : isAppView ? (
           <>
             <div className="flex flex-col items-center justify-center w-full min-w-0">

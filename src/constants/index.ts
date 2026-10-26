@@ -1,12 +1,5 @@
 // 应用常量定义
 
-export const APP_CONFIG = {
-  name: '蜗牛个人导航',
-  version: '1.0.0',
-  description: '现代化云端导航页面',
-  githubUrl: 'https://github.com/coolbeard/favorite',
-} as const
-
 export const STORAGE_KEYS = {
   LOCAL_STORAGE_KEY: 'cloudnav_data_cache',
   AUTH_KEY: 'cloudnav_auth_token',
@@ -19,7 +12,6 @@ export const STORAGE_KEYS = {
 export const API_ENDPOINTS = {
   STORAGE: '/api/storage',
   LINK: '/api/link',
-  WEBDAV: '/api/webdav',
   AUTH: '/api/auth',
 } as const
 

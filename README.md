@@ -20,7 +20,7 @@
 - **KV 云端存储**：数据持久化，localStorage 缓存 + KV 双向同步
 - **图标缓存**：可抓取网站图标并缓存到 EdgeOne Pages Blob / Cloudflare R2
 - **AI 辅助**：集成 Gemini / OpenAI 兼容 API，自动填充链接描述、智能分类建议
-- **数据导入导出**：Chrome 书签 HTML / JSON 备份 / WebDAV 云同步
+- **数据导入导出**：Chrome 书签 HTML / JSON 备份 / ~~WebDAV 云同步~~
 - **丰富小组件**：Mastodon / Memos 动态滚动条、实时天气（和风天气）
 - **个性化**：深色/浅色模式（自动检测系统偏好）、紧凑/详细视图、自定义图标
 - **卡片动效**：从图标提取主色调，hover 时显示彩色边框 and 光晕
@@ -165,7 +165,7 @@ vercel dev
 ├── api/                       # Vercel Serverless Functions (TypeScript)
 ├── functions/api/             # EdgeOne / Cloudflare Pages Functions (JavaScript)
 ├── components/                # 通用 UI 组件 (Modal, Toast, ErrorBoundary, 小组件等)
-├── services/                  # 前端业务逻辑 (AI, 书签解析, 导出, WebDAV 等)
+├── services/                  # 前端业务逻辑 (AI, 书签解析, 导出)
 ├── src/
 │   ├── components/            # 核心业务组件 (layout, category, link)
 │   ├── contexts/              # React Context 状态管理 (Auth, Links, Categories, Config)

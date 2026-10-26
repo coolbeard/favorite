@@ -33,7 +33,7 @@ export function MainContent({
 }: MainContentProps) {
   const { links = [], pinnedLinks = [], getLinksByCategory } = useLinksContext();
   const { categoryTree = [], categories = [] } = useCategoriesContext();
-  const { showPinnedWebsites = true, viewMode = 'compact' } = useConfigContext();
+  const { showPinnedWebsites = true, viewMode = 'detailed' } = useConfigContext();
   const { authToken } = useAuthContext();
   const { sensors, handleDragEnd, handlePinnedDragEnd } = useDragSort();
   const [activeCategory, setActiveCategory] = useState<string | null>(null);

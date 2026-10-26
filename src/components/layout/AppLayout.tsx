@@ -16,7 +16,6 @@ const LinkModal = lazy(() => import('../../../components/LinkModal'));
 const CategoryManagerModal = lazy(() => import('../../../components/CategoryManagerModal'));
 const BackupModal = lazy(() => import('../../../components/BackupModal'));
 const CategoryAuthModal = lazy(() => import('../../../components/CategoryAuthModal'));
-const ImportModal = lazy(() => import('../../../components/ImportModal'));
 const SettingsModal = lazy(() => import('../../../components/SettingsModal'));
 const SearchConfigModal = lazy(() => import('../../../components/SearchConfigModal'));
 const ContextMenu = lazy(() => import('../../../components/ContextMenu'));
@@ -27,7 +26,7 @@ export function AppLayout() {
   const { authToken, requiresAuth, isCheckingAuth, capabilities, login, logout } = useAuthContext();
   const { links = [], addLink, updateLink, deleteLink, deleteLinks, setLinksAndSync } = useLinksContext();
   const { categories = [], categoryTree = [], setCategoriesAndSync, unlockedCategoryIds = new Set(), unlockCategory } = useCategoriesContext();
-  const { ai: aiConfig, icon: iconConfig, viewMode, showPinnedWebsites, ticker, weather, website, webdav, search, setAI, setIcon, setWebsite, setShowPinned, setMastodon, setWeather, setWebDav, setSearch, setViewMode } = useConfigContext();
+  const { ai: aiConfig, icon: iconConfig, viewMode, website, search, setAI, setIcon, setWebsite, setShowPinned, setMastodon, setWeather, setSearch, setViewMode } = useConfigContext();
 
   // Hooks
   const { 
@@ -51,7 +50,6 @@ export function AppLayout() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isCatManagerOpen, setIsCatManagerOpen] = useState(false);
   const [isBackupModalOpen, setIsBackupModalOpen] = useState(false);
-  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [isSearchConfigModalOpen, setIsSearchConfigModalOpen] = useState(false);
   const [catAuthModalData, setCatAuthModalData] = useState<Category | null>(null);
@@ -112,7 +110,7 @@ export function AppLayout() {
 
       // Don't trigger if any modal is open or in edit modes
       if (isModalOpen || isAuthOpen || isCatManagerOpen || isBackupModalOpen || 
-          isImportModalOpen || isSettingsModalOpen || isSearchConfigModalOpen ||
+          isSettingsModalOpen || isSearchConfigModalOpen ||
           isEditMode || isBatchEditMode || isDragSortMode) {
         return;
       }
@@ -468,7 +466,6 @@ export function AppLayout() {
           onOpenSettings={() => setIsSettingsModalOpen(true)}
           onOpenCatManager={() => setIsCatManagerOpen(true)}
           onOpenBackup={() => setIsBackupModalOpen(true)}
-          onOpenImport={() => setIsImportModalOpen(true)}
           onOpenAuth={() => setIsAuthOpen(true)}
           onToggleSidebar={() => setSidebarOpen(prev => !prev)}
           isBatchEditMode={isBatchEditMode}
@@ -545,22 +542,10 @@ export function AppLayout() {
             links={links}
             categories={categories}
             onRestore={(newLinks, newCats) => setLinksAndSync(newLinks, newCats)}
-            webDavConfig={webdav || { url: '', username: '', password: '', enabled: false }}
-            onSaveWebDavConfig={setWebDav}
             searchConfig={search || { mode: 'internal', externalSources: [] }}
             onRestoreSearchConfig={setSearch}
             aiConfig={aiConfig}
             onRestoreAIConfig={setAI}
-          />
-        )}
-
-        {isImportModalOpen && (
-          <ImportModal
-            isOpen={isImportModalOpen}
-            onClose={() => setIsImportModalOpen(false)}
-            existingLinks={links}
-            categories={categories}
-            onImport={(newLinks, newCats) => setLinksAndSync(newLinks, newCats)}
           />
         )}
 
@@ -587,7 +572,6 @@ export function AppLayout() {
                 setIcon(settings.icon);
               }
             }}
-            onImportClick={() => { setIsImportModalOpen(true); setIsSettingsModalOpen(false); }}
             onBackupClick={() => { setIsBackupModalOpen(true); setIsSettingsModalOpen(false); }}
             supportsUpload={capabilities?.upload ?? true}
           />

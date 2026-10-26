@@ -33,13 +33,6 @@ export interface AppState {
   darkMode: boolean;
 }
 
-export interface WebDavConfig {
-  url: string;
-  username: string;
-  password: string;
-  enabled: boolean;
-}
-
 export type AIProvider = 'google' | 'claude' | 'openai' | 'custom';
 
 export interface AIProviderConfig {
@@ -62,7 +55,8 @@ export interface AIConfig {
 }
 
 // 视图模式类型
-export type ViewMode = 'compact' | 'detailed' | 'app';
+export type ViewMode = 'detailed' | 'app' | 'other';
+// export type ViewMode = 'detailed' | 'app';
 
 // 图标获取方式类型
 export type IconSourceType = 'faviconextractor' | 'google' | 'customapi' | 'customurl' | 'upload-edgeone' | 'upload-cloudflare';
@@ -182,9 +176,6 @@ export interface AppConfig {
 
   // 网站配置
   website?: WebsiteConfig;
-
-  // WebDAV 配置
-  webdav?: WebDavConfig;
 
   // 搜索配置
   search?: SearchConfig;
