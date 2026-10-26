@@ -52,7 +52,7 @@ export function LinkCard({
 
   const isDetailedView = viewMode === 'detailed';
   const isAppView = viewMode === 'app';
-  const iconSrc = link.icon && !imgError ? link.icon : null;
+  const iconSrc = link.icon && !imgError ? link.icon : !imgError && link.url ? `/api/icon?url=${encodeURIComponent(link.url)}` : null;
 
   // 观察可见性，离屏卡片延迟执行颜色提取
   useEffect(() => {

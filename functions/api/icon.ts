@@ -40,7 +40,6 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     if (upstreamResponse) {
       response = new Response(upstreamResponse.body, upstreamResponse);
       response.headers.set('Cache-Control', 'public, max-age=604800, s-maxage=604800');
-      response.headers.set('Access-Control-Allow-Origin', '*');
       response.headers.set('X-Icon-Cache-Status', 'MISS');
       context.waitUntil(cache.put(cacheKey, response.clone()));
     } else {
@@ -53,7 +52,10 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         },
       });
       response.headers.set('X-Icon-Cache-Status', 'DEFAULT');
+      // 兜底响应也写入缓存，避免每次请求都重新抓取目标站
+      context.waitUntil(cache.put(cacheKey, response.clone()));
     }
+    // 统一设置 CORS，避免重复
     response.headers.set('Access-Control-Allow-Origin', '*');
   }
 
